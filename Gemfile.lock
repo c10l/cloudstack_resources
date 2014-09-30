@@ -1,24 +1,33 @@
 PATH
   remote: .
   specs:
-    cloudstack-rb (0.1.0)
+    cloudstack_resources (0.1.0)
       cloudstack_ruby_client
 
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (3.4.0)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
     cloudstack_ruby_client (1.0.1)
     coderay (1.1.0)
+    columnize (0.8.9)
+    debugger-linecache (1.2.0)
     method_source (0.8.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (2.0.0)
+      byebug (~> 3.4)
+      pry (~> 0.10)
     slop (3.6.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  cloudstack-rb!
-  pry
+  cloudstack_resources!
+  pry-byebug

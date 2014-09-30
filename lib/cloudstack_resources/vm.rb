@@ -1,4 +1,4 @@
-class VM
+class CloudstackResources::VM
   def initialize(conn, *args)
     @conn = conn
 
