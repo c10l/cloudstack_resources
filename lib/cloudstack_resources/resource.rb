@@ -1,8 +1,6 @@
 module CloudstackResources
   class Resource
 
-    HAS_MANY = []
-
     def initialize(attributes = {})
       @conn = CloudstackResources::connection
       @cloudstack_attributes = attributes
@@ -24,12 +22,20 @@ module CloudstackResources
     private
 
     def self.has_many(resource_type)
-      HAS_MANY << resource_type
+      klass = "CloudstackResources::#{resource_type.to_s.singularize.camelize}".constantize
+      current_resource = self.name.demodulize.downcase
+
+      code = %Q{
+        def #{resource_type}
+          #{klass}.where( :#{current_resource}id => self.id )
+        end
+      }
+      class_eval(code)
     end
 
     def populate_attributes
       @cloudstack_attributes.keys.each do |attribute|
-        next if @klass::HAS_MANY.include?(attribute.to_sym)
+        next if self.respond_to?(attribute.to_sym)
         @klass.send(:attr_accessor, attribute)
         setter = "#{attribute}=".to_sym
         self.send(setter, @cloudstack_attributes[attribute.to_s])

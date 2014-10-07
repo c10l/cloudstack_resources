@@ -1,5 +1,6 @@
 require 'cloudstack_ruby_client'
 require 'cloudstack_resources/version'
+require 'active_support/inflector'
 
 module CloudstackResources
 
