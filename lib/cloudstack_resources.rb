@@ -3,8 +3,8 @@ require 'cloudstack_resources/version'
 
 class CloudstackResources
 
+  autoload 'Conn',           'cloudstack_resources/conn'
   autoload 'Resource',       'cloudstack_resources/resource'
-  autoload 'Conn',           'cloudstack_resources/resource/conn'
   autoload 'Project',        'cloudstack_resources/resource/project'
   autoload 'VirtualMachine', 'cloudstack_resources/resource/virtual_machine'
   autoload 'Tag',            'cloudstack_resources/resource/tag'
