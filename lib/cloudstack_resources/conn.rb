@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class Conn
 
     attr_accessor :api_url

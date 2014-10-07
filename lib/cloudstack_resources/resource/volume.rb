@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class Volume < Resource
 
     RESOURCE_NAME = 'volume'

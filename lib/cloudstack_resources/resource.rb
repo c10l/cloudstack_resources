@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class Resource
 
     CHILD_RESOURCES = []

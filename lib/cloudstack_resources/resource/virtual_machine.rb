@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class VirtualMachine < Resource
 
     RESOURCE_NAME = 'virtual_machine'

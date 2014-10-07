@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class Project < Resource
 
     RESOURCE_NAME = 'project'

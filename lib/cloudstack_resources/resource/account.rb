@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class Account < Resource
 
     RESOURCE_NAME = 'account'

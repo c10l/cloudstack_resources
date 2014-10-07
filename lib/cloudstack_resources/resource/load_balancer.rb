@@ -1,4 +1,4 @@
-class CloudstackResources
+module CloudstackResources
   class LoadBalancer < Resource
 
     RESOURCE_NAME = 'load_balancer'

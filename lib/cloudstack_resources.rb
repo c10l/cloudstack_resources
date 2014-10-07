@@ -1,7 +1,7 @@
 require 'cloudstack_ruby_client'
 require 'cloudstack_resources/version'
 
-class CloudstackResources
+module CloudstackResources
 
   autoload 'Conn',           'cloudstack_resources/conn'
   autoload 'Resource',       'cloudstack_resources/resource'
