@@ -10,15 +10,6 @@ module CloudstackResources
       populate_attributes
     end
 
-    def populate_attributes
-      @cloudstack_attributes.keys.each do |attribute|
-        next if @klass::HAS_MANY.include?(attribute.to_sym)
-        @klass.send(:attr_accessor, attribute)
-        setter = "#{attribute}=".to_sym
-        self.send(setter, @cloudstack_attributes[attribute.to_s])
-      end
-    end
-
     def self.where(params = {})
       list_method = "list_#{self::RESOURCE_NAME}s".to_sym
       resources = CloudstackResources::connection.send(list_method, params)
@@ -34,6 +25,15 @@ module CloudstackResources
 
     def self.has_many(resource_type)
       HAS_MANY << resource_type
+    end
+
+    def populate_attributes
+      @cloudstack_attributes.keys.each do |attribute|
+        next if @klass::HAS_MANY.include?(attribute.to_sym)
+        @klass.send(:attr_accessor, attribute)
+        setter = "#{attribute}=".to_sym
+        self.send(setter, @cloudstack_attributes[attribute.to_s])
+      end
     end
 
   end
