@@ -1,7 +1,7 @@
 module CloudstackResources
   class Resource
 
-    CHILD_RESOURCES = []
+    HAS_MANY = []
 
     def initialize(attributes = {})
       @conn = CloudstackResources::connection
@@ -12,7 +12,7 @@ module CloudstackResources
 
     def populate_attributes
       @cloudstack_attributes.keys.each do |attribute|
-        next if @klass::CHILD_RESOURCES.include?(attribute.to_sym)
+        next if @klass::HAS_MANY.include?(attribute.to_sym)
         @klass.send(:attr_accessor, attribute)
         setter = "#{attribute}=".to_sym
         self.send(setter, @cloudstack_attributes[attribute.to_s])
@@ -28,6 +28,12 @@ module CloudstackResources
 
     class << self
       alias_method :all, :where
+    end
+
+    private
+
+    def self.has_many(resource_type)
+      HAS_MANY << resource_type
     end
 
   end

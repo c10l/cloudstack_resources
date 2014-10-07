@@ -3,10 +3,8 @@ module CloudstackResources
 
     RESOURCE_NAME = 'project'
 
-    CHILD_RESOURCES = [
-      :tags,
-      :virtual_machines,
-    ]
+    has_many :tags
+    has_many :virtual_machines
 
     def tags
       @tags ||= Tag.where( { :projectid => self.id } )
