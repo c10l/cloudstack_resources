@@ -33,19 +33,15 @@ module CloudstackResources
       klass = "CloudstackResources::#{resource_type.to_s.singularize.camelize}".constantize
       this = self.name.demodulize.downcase
 
-      code = %{def #{resource_type}
-        #{klass}.where( :#{this}id => self.id )
-      end}
-      class_eval(code)
+      define_method(resource_type) { klass.where( :"#{this}id" => self.id ) }
     end
 
     def self.belongs_to(resource_type)
       klass = "CloudstackResources::#{resource_type.to_s.camelize}".constantize
 
-      code = %{def #{resource_type}
-        #{klass}.select!( :id => self.cloudstack_attributes['#{resource_type}id'] )
-      end}
-      class_eval(code)
+      define_method(resource_type) do
+        klass.select!( :id => self.cloudstack_attributes['"#{resource_type}id"'] )
+      end
     end
 
     def self.resource_name(name)
