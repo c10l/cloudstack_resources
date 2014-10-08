@@ -9,6 +9,7 @@ module CloudstackResources
   autoload 'Project',        'cloudstack_resources/resource/project'
   autoload 'VirtualMachine', 'cloudstack_resources/resource/virtual_machine'
   autoload 'Tag',            'cloudstack_resources/resource/tag'
+  autoload 'Network',        'cloudstack_resources/resource/network'
 
   def self.connection
     @connection ||= Conn.new
