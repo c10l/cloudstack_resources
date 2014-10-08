@@ -60,11 +60,19 @@ module CloudstackResources
     def populate_attributes
       attributes = @cloudstack_attributes.keys.delete_if { |attr| respond_to? attr.to_sym }
       attributes.each do |attribute|
-        populate = %Q{ @#{attribute} = @cloudstack_attributes['#{attribute}'] }
-        instance_eval(populate)
-        create_getter = %Q{ attr_reader :#{attribute} }
-        @klass.class_eval(create_getter)
+        populate_attribute(attribute)
+        self.class.def_attribute_getter(attribute)
       end
+    end
+
+    def populate_attribute(attribute)
+      code = %Q{ @#{attribute} = @cloudstack_attributes['#{attribute}'] }
+      instance_eval(code)
+    end
+
+    def self.def_attribute_getter(attribute)
+      code = %Q{ attr_reader :#{attribute} }
+      class_eval(code)
     end
 
   end
