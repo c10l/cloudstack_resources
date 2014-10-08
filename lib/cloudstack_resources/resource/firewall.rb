@@ -1,7 +1,7 @@
 module CloudstackResources
   class Firewall < Resource
 
-    RESOURCE_NAME = 'firewall'
+    resource_name :firewall
 
   end
 end

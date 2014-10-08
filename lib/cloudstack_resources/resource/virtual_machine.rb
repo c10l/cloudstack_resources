@@ -1,7 +1,7 @@
 module CloudstackResources
   class VirtualMachine < Resource
 
-    RESOURCE_NAME = 'virtual_machine'
+    resource_name :virtual_machine
 
     belongs_to :project
 

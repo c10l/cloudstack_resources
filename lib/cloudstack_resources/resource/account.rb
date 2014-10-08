@@ -1,7 +1,7 @@
 module CloudstackResources
   class Account < Resource
 
-    RESOURCE_NAME = 'account'
+    resource_name :account
 
   end
 end

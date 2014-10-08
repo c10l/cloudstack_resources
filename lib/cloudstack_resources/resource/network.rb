@@ -1,7 +1,7 @@
 module CloudstackResources
   class Network < Resource
 
-    RESOURCE_NAME = 'network'
+    resource_name :network
 
   end
 end

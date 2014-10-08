@@ -1,7 +1,7 @@
 module CloudstackResources
   class LoadBalancer < Resource
 
-    RESOURCE_NAME = 'load_balancer'
+    resource_name :load_balancer
 
   end
 end

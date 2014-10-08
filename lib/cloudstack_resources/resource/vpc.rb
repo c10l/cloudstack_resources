@@ -1,7 +1,7 @@
 module CloudstackResources
   class VPC < Resource
 
-    RESOURCE_NAME = 'vpc'
+    resource_name :vpc
 
   end
 end

@@ -1,7 +1,7 @@
 module CloudstackResources
   class Volume < Resource
 
-    RESOURCE_NAME = 'volume'
+    resource_name :volume
 
   end
 end
