@@ -3,9 +3,7 @@ module CloudstackResources
 
     RESOURCE_NAME = 'virtual_machine'
 
-    def project
-      @project ||= Project.where( { :id => self.projectid } )
-    end
+    belongs_to :project
 
   end
 end

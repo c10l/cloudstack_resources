@@ -1,6 +1,10 @@
 module CloudstackResources
   class Resource
 
+    RESOURCE_NAME = 'resource'
+
+    attr_reader :cloudstack_attributes
+
     def initialize(attributes = {})
       @conn = CloudstackResources::connection
       @cloudstack_attributes = attributes
@@ -13,6 +17,10 @@ module CloudstackResources
       resources = CloudstackResources::connection.send(list_method, params)
       return [] if resources == {}
       resources[self::RESOURCE_NAME.gsub('_','')].collect { |p| self.new(p) }
+    end
+
+    def self.select!(params = {})
+      self.where(params).first
     end
 
     class << self
@@ -33,12 +41,29 @@ module CloudstackResources
       class_eval(code)
     end
 
+    def self.belongs_to(resource_type)
+      klass = "CloudstackResources::#{resource_type.to_s.camelize}".constantize
+      current_resource = self::RESOURCE_NAME
+
+      code = %Q{
+        def #{resource_type}
+          #{klass}.select!( :id => self.cloudstack_attributes['#{resource_type}id'] )
+        end
+      }
+      class_eval(code)
+    end
+
+    def self.resource_name(name)
+      class_eval("RESOURCE_NAME = '#{name.to_s}'")
+    end
+
     def populate_attributes
-      @cloudstack_attributes.keys.each do |attribute|
-        next if self.respond_to?(attribute.to_sym)
-        @klass.send(:attr_accessor, attribute)
-        setter = "#{attribute}=".to_sym
-        self.send(setter, @cloudstack_attributes[attribute.to_s])
+      attributes = @cloudstack_attributes.keys.delete_if { |attr| respond_to? attr.to_sym }
+      attributes.each do |attribute|
+        populate = %Q{ @#{attribute} = @cloudstack_attributes['#{attribute}'] }
+        instance_eval(populate)
+        create_getter = %Q{ attr_reader :#{attribute} }
+        @klass.class_eval(create_getter)
       end
     end
 
