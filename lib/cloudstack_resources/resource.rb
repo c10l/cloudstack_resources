@@ -31,25 +31,20 @@ module CloudstackResources
 
     def self.has_many(resource_type)
       klass = "CloudstackResources::#{resource_type.to_s.singularize.camelize}".constantize
-      current_resource = self.name.demodulize.downcase
+      this = self.name.demodulize.downcase
 
-      code = %{
-        def #{resource_type}
-          #{klass}.where( :#{current_resource}id => self.id )
-        end
-      }
+      code = %{def #{resource_type}
+        #{klass}.where( :#{this}id => self.id )
+      end}
       class_eval(code)
     end
 
     def self.belongs_to(resource_type)
       klass = "CloudstackResources::#{resource_type.to_s.camelize}".constantize
-      current_resource = self::RESOURCE_NAME
 
-      code = %{
-        def #{resource_type}
-          #{klass}.select!( :id => self.cloudstack_attributes['#{resource_type}id'] )
-        end
-      }
+      code = %{def #{resource_type}
+        #{klass}.select!( :id => self.cloudstack_attributes['#{resource_type}id'] )
+      end}
       class_eval(code)
     end
 
