@@ -1,7 +1,14 @@
 module CloudstackResources
   class Tag < Resource
 
-    RESOURCE_NAME = 'tag'
+    resource_name :tag
+
+    belongs_to :resource
+
+    def resource
+      resource_class = "CloudstackResources::#{self.resourcetype}".constantize
+      resource_class.where( { :id => @resourceid } )
+    end
 
   end
 end
