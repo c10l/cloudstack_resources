@@ -54,8 +54,9 @@ module CloudstackResources
     end
 
     def populate_attributes
-      attributes = @cloudstack_attributes.keys.delete_if { |attr| respond_to? attr.to_sym }
+      attributes = @cloudstack_attributes.keys
       attributes.each do |attribute|
+        next if respond_to?(attribute.to_sym) && !instance_eval("@#{attribute}.nil?")
         populate_attribute(attribute)
         self.class.def_attribute_getter(attribute)
       end
@@ -67,6 +68,7 @@ module CloudstackResources
     end
 
     def self.def_attribute_getter(attribute)
+      return nil if instance_methods.include?(attribute.to_sym)
       code = %{ attr_reader :#{attribute} }
       class_eval(code)
     end
