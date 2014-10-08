@@ -33,7 +33,7 @@ module CloudstackResources
       klass = "CloudstackResources::#{resource_type.to_s.singularize.camelize}".constantize
       current_resource = self.name.demodulize.downcase
 
-      code = %Q{
+      code = %{
         def #{resource_type}
           #{klass}.where( :#{current_resource}id => self.id )
         end
@@ -45,7 +45,7 @@ module CloudstackResources
       klass = "CloudstackResources::#{resource_type.to_s.camelize}".constantize
       current_resource = self::RESOURCE_NAME
 
-      code = %Q{
+      code = %{
         def #{resource_type}
           #{klass}.select!( :id => self.cloudstack_attributes['#{resource_type}id'] )
         end
@@ -54,7 +54,8 @@ module CloudstackResources
     end
 
     def self.resource_name(name)
-      class_eval("RESOURCE_NAME = '#{name.to_s}'")
+      code = %{ RESOURCE_NAME = '#{name.to_s}' }
+      class_eval(code)
     end
 
     def populate_attributes
@@ -66,12 +67,12 @@ module CloudstackResources
     end
 
     def populate_attribute(attribute)
-      code = %Q{ @#{attribute} = @cloudstack_attributes['#{attribute}'] }
+      code = %{ @#{attribute} = @cloudstack_attributes['#{attribute}'] }
       instance_eval(code)
     end
 
     def self.def_attribute_getter(attribute)
-      code = %Q{ attr_reader :#{attribute} }
+      code = %{ attr_reader :#{attribute} }
       class_eval(code)
     end
 
