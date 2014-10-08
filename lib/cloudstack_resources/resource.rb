@@ -6,7 +6,6 @@ module CloudstackResources
     attr_reader :cloudstack_attributes
 
     def initialize(attributes = {})
-      @conn = CloudstackResources::connection
       @cloudstack_attributes = attributes
       @klass = self.class
       populate_attributes
