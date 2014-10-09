@@ -5,6 +5,8 @@ require 'active_support/inflector'
 module CloudstackResources
 
   autoload 'Conn',           'cloudstack_resources/conn'
+  autoload 'Selectors',      'cloudstack_resources/selectors'
+  autoload 'Associations',   'cloudstack_resources/associations'
   autoload 'Resource',       'cloudstack_resources/resource'
   autoload 'Project',        'cloudstack_resources/resource/project'
   autoload 'VirtualMachine', 'cloudstack_resources/resource/virtual_machine'
