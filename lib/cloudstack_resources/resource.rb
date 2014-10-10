@@ -11,6 +11,7 @@ module CloudstackResources
     def initialize(attributes = {})
       @cloudstack_attributes = attributes
       @klass = self.class
+      @conn = CloudstackResources::connection
       populate_attributes
     end
 
